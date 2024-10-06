@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+    font-family: 'Arial', sans-serif; /* Menggunakan font sans-serif */
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+  header {
+    background-color: #007bff; /* Ganti dengan warna yang diinginkan */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+    color: white; /* Warna teks putih agar kontras dengan latar belakang */
+}
+
+h5 {
+    margin: 0;
+    font-size: 1.8em; /* Ukuran font yang lebih besar untuk kesan lebih menonjol */
+    font-weight: bold; /* Membuat teks lebih tebal */
+}
+
+.bintang-review {
+    font-size: 1.5em;
+    color: #ffcc00; /* Warna bintang */
+    margin-bottom: 15px;
+}
+
+/* Mengubah tampilan tombol */
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px; /* Membuat tombol lebih bulat */
+    background-color: #28a745; /* Warna hijau untuk tombol */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Animasi saat hover */
+}
+
+button:hover {
+    background-color: #218838; /* Warna saat hover */
+}
+
+.popup {
+    display: none; /* Tersembunyi secara default */
+    position: fixed; /* Mengatur posisi tetap */
+    z-index: 1000; /* Menempatkan pop-up di atas elemen lain */
+    left: 0;
+    top: 0;
+    width: 100%; /* Lebar penuh */
+    height: 100%; /* Tinggi penuh */
+    overflow: auto; /* Tambahkan scroll jika diperlukan */
+    background-color: rgba(0, 0, 0, 0.8); /* Latar belakang semi-transparan */
+}
+
+.popup-content {
+    background-color: #ffffff; /* Latar belakang putih */
+    margin: 15% auto; /* Pusatkan di layar */
+    padding: 20px;
+    border-radius: 10px; /* Sudut membulat */
+    width: 90%; /* Lebar pop-up */
+    max-width: 400px; /* Lebar maksimal */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Bayangan */
+    text-align: center; /* Rata tengah */
+    animation: fadeIn 0.3s; /* Animasi saat muncul */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.close {
+    color: #ff4d4d; /* Warna merah untuk tombol tutup */
+    float: right; /* Mengapungkan tombol ke kanan */
+    font-size: 28px; /* Ukuran font untuk tombol tutup */
+    font-weight: bold; /* Menebalkan font */
+    cursor: pointer; /* Kursor pointer */
+}
+
+.close:hover {
+    color: #ff0000; /* Mengubah warna saat hover */
+}
+
+.count {
+    font-size: 2.5em; /* Ukuran font besar untuk hitungan */
+    margin: 20px 0; /* Jarak atas dan bawah */
+    color: #007bff; /* Warna biru untuk hitungan */
+    font-weight: bold; /* Menebalkan font */
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px; /* Membuat tombol lebih bulat */
+    background-color: #28a745; /* Warna hijau untuk tombol */
+    color: white;
+    font-size: 1.2em; /* Ukuran font tombol */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* Animasi saat hover */
+    margin: 5px; /* Jarak antar tombol */
+}
+
+.btn:hover {
+    background-color: #218838; /* Warna saat hover */
+    transform: scale(1.05); /* Sedikit membesar saat hover */
+}
+
+.open-btn {
+    margin: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px; /* Membuat tombol lebih bulat */
+    background-color: #007bff; /* Warna biru untuk tombol buka */
+    color: white;
+    font-size: 1.2em; /* Ukuran font tombol */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* Animasi saat hover */
+}
+
+.open-btn:hover {
+    background-color: #0056b3; /* Warna saat hover */
+    transform: scale(1.05); /* Sedikit membesar saat hover */
+}
+
+.logo-engine {
+    background-color: #ffffff; /* Latar belakang putih */
+    border: 1px solid #007bff; /* Garis biru */
+    border-radius: 8px; /* Sudut membulat */
+    padding: 15px; /* Jarak dalam */
+    text-align: center; /* Rata tengah */
+    max-width: 300px; /* Lebar maksimum */
+    margin: 20px auto; /* Pusatkan dan beri margin atas dan bawah */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Bayangan */
+    font-family: 'Arial', sans-serif; /* Font sans-serif */
+}
+
+.logo-engine p {
+    margin: 0; /* Hapus margin */
+    font-size: 1.2em; /* Ukuran font */
+    color: #007bff; /* Warna biru */
+    font-weight: bold; /* Tebalkan font */
+}
+
+.logo-engine p::before {
+    content: "✨ "; /* Tambahkan ikon bintang di depan teks */
+}
+
+@media (max-width: 600px) {
+    .logo-engine {
+        width: 90%; /* Lebar lebih kecil pada layar kecil */
+    }
+
+    .logo-engine p {
+        font-size: 1em; /* Ukuran font lebih kecil pada layar kecil */
+    }
+}
+
+
+/* Responsif */
+@media (max-width: 600px) {
+    .popup-content {
+        width: 95%; /* Lebar pop-up di perangkat kecil */
+    }
+}
+
+
+/* Responsif */
+@media (max-width: 600px) {
+    .popup-content {
+        width: 90%; /* Lebar pop-up di perangkat kecil */
+    }
+}
+
+/* Responsif */
+@media (max-width: 600px) {
+    header {
+        padding: 10px;
+    }
+
+    h5 {
+        font-size: 1.5em;
+    }
+
+    .bintang-review {
+        font-size: 1.2em;
+    }
+
+    input[type="number"] {
+        width: 40px;
+    }
+}
+
+</style>
+<body>
+   <header>
+    <h5>ALIMKami</h5>
+   </header>
+
+   <h4>Doa agar rezeki lancar</h4>
+   <div class="doa1">
+    <p>Alloohumma innii as-aluka an tarzuqonii rizqon halaalan waasi'an thoyyiban min ghoiri ta'abin wa laa masyaqqotin wa laa dhoirin wa laa nashobin innaka 'alaa kulli syai-in qodiir.</p>
+    <p>"Ya Allah, aku minta pada Engkau rezeki yang halal, luas, baik, tanpa kerepotan, kemelaratan, dan tanpa keberatan.</p>
+   </div>
+   <h4>Doa agar di berikan jodoh</h4>
+   <div class="doa2">
+    <p>Robbi hablii milladunka zaujatan thoyyibatan akhtubuhaa wa atazawwaju biha watakunu shoohibatan lii fiddunyaa wal akhiroh.</p>
+    <p>Artinya:  
+
+        Ya Robb, berikanlah kepadaku istri yang terbaik dari sisi-Mu, istri yang aku lamar dan nikahi dan istri yang menjadi sahabatku dalam urusan agama, urusan dunia dan akhirat.</p>
+</div>
+<h4>doa zikir</h4>
+<div class="zikir">
+    <p>baca zikir sebanyak 3 kali</p>
+    <p>ASTAGHFIRULLAH HAL'ADZIM, ALADZI LAAILAHA ILLAHUWAL KHAYYUL QOYYUUMU WA ATUUBU ILAIIH</p>
+    <p>habis itu membaca surat alfatihah dan ayat kursi</p>
+    <p>Allahu laa ilaaha illaa huwal hayyul qayyum. Laa ta'khudzuhuu sinatuw wa laa naum. Lahuu maa fis samaawaati wa maa fil ardh. Man dzal ladzii yasyfa'u 'indahuu illaa bi idznih. Ya'lamu maa bayna aidiihim wa maa khalfahum. Wa laa yuhiithuuna bi syai-im min 'ilmihii illaa bimaa syaa-a. Wasi'a kursiyyuhus samaawaati wal ardh walaa ya-uuduhuu hifzhuhumaa Wahuwal 'aliyyul 'azhiim.
+    </p>
+    <p>sesudah membaca itu di lanjut membaca ini</p>
+    <p>SUBHANALLAH 33x
+    </p>
+    <p>ALHAMDULILLAH 33x
+    </p>
+    <p>ALLAHU AKBAR 33x
+    </p>
+    <p>LAILAHA ILLALLAH 33x
+    </p>
+    <p>sesudah membaca itu di lanjutin membaca ini 
+    </p>
+    <p>BISMILLAHIRRAHMAANIRRAHIIM. ALHAMDU LILLAAHI RABBIL 'AALAMIIN, HAMDAN YUWAAFII NI'AMAHU WAYUKAAFII MAZIIDAHU. YA RABBANAA LAKAL HAMDU KAMAA YAN BAGHHI LIJALAALI WAJHIKA WA'AZHIIMI SULTHAANIKA.
+    </p>
+    <p>ALLAHUMMA SHALLI 'ALAA SAYYIDINAA MUHAMMADIN WA'ALAA AALI SAYYIDINAA MUHAMMAD
+
+    </p>
+    <p>ALLAHUMMA RABBANAA TAQABBAL MINNAA SHALAATAANA WASHIYAAMANAA WARUKUU'ANAA WASUJUUDANAA WAQU'UUDANAA WATADLARRU'ANAA, WATAKHASYSYU'ANAA WATA'ABBUDANAA, WATAMMIM TAQSHIIRANAA YAA ALLAH YAA RABBAL'AALAMIIN
+    </p>
+    <p>RABBANA DZHALAMNAA ANFUSANAA WA-INLAMTAGHFIR LANA WATARHAMNAA LANAKUUNANNA MlNAL KHAASIRIIN.
+    </p>
+    <p>RABBANAA WALAA TAHMIL'ALAINAA ISHRAN KAMA HAMALTAHUL'ALAL LADZIINA MIN QABLINAA.
+    </p>
+    <p>RABBANAA WALAA TUHAMMILNAA MAALAA THAAQATA LANAA BIHII WA'FU'ANNAA WAGHFIR LANAA WARHAMNAA ANTA MAULAANAA FANSHURNAA 'ALAL QAUMIL KAAFIRIIN
+    </p>
+    <p>RABBANAA LAA TUZIGH QULUUBANAA BA'DA IDZHADAITANAA W'AHABLANAA MIN LADUNKA RAHMATAN INNAKA ANTAL WAHHAAB
+    </p>
+    <p>RABBANAGHFIR LANAA WALIWAALIDINAA WALIJAMI'IL MUSLIMIIN WALMUSLIMAATI WAL MU'MINIINA WALMU'MINATI. AL AHYAA-I-MINHUM WAL AMWAATI, INNAKA ALAA KULI SYAI'N QADIIR
+    </p>
+    <p>RABBANAA AATINAA FIDDUNYAA HASANATAN WAFIL AAKHIRATI HASANATAN WAQINAA ADZAABAN-NAAR
+    </p>
+    <p>ALLAHUMMAGHFIRLANAA DZUNUUBANAA WAKAFFIR ANNAA SAYYIAATINAA WATAWAFFANAA MAALABRAARI
+    </p>
+    <p>SUBHAANA RABBIKA RABBIL I'ZZATI AMMAA YASHIFUUNA WASALAAMUN 'ALAL MURSALHNA WAL-HAMDU LILLAAHI RABBIL'AALAMIINA
+    </p>
+</div>
+<h4>Doa agar di berikan ketampanan</h4>
+<div class="doa3">
+<p>Allahumma 'alnii nuuru yusufa ala wajhii fa man ro aanii yuhibbunii mahabbatan
+
+</p>
+<p>Artinya: "Ya Allah, jadikanlah Nur cahaya Nabi Yusuf pada wajahku, dan bagi siapa yang melihat akan menjadi kagum serta memiliki cinta kasih kepada ku."
+
+</p>
+<br>
+<h4>doa ketika bercermin agar tampan</h4>
+<p>Allahumma kamaa hassanta khalqii fa hassin khuluqi.
+
+</p>
+<p>Artinya: "Ya Allah, sebagaimana Engkau telah ciptakan aku dengan baik, maka perbaikilah akhlakku."
+
+</p>
+</div>
+<h4>Doa agar Otak Cerdas dan Kuat Hafalan
+</h4>
+<div class="doa4">
+    <p>Allahummanfa'ni bima 'allamtani wa 'allimni ma yanfa'uni wa zidni 'ilman walhamdulillahi 'ala kulli halin.</p>
+    <p>Artinya: "Ya Allah, berilah kemanfaatan atas segala ilmu yang Engkau ajarkan pada saya. Berilah saya ilmu yang bermanfaat dan tambahkanlah ilmu pada saya.</p>
+</div>
+
+
+
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <h1>Tasbih Digital</h1>
+        <div id="count">0</div>
+        <button onclick="increment()">Tambah</button>
+        <button onclick="resetCount()">Reset</button>
+    </div>
+</div>
+<button onclick="openPopup()">Buka Tasbih Digital</button>
+
+<div class="logo-engine">
+    <p>di buat oleh engine VRN-ENGINE</p>
+</div>
+<script>
+      let count = 0;
+
+function increment() {
+    count++;
+    updateDisplay();
+}
+
+
+
+function resetCount() {
+    count = 0;
+    updateDisplay();
+}
+
+function updateDisplay() {
+    document.getElementById('count').innerText = count;
+}
+
+function openPopup() {
+    document.getElementById('popup').style.display = 'block';
+}
+
+function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+}
+
+</script>
+</body>
+</html>
